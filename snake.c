@@ -14,10 +14,13 @@ void FLVCobra(ListaCobra* Cobra){
 }
 
 /*IMPLEMENTADO - COMPLETO*/
-void IniciaCobra(ListaCobra* Cobra){ 
+void IniciaCobra(ListaCobra* Cobra, float resize){ 
 
+    
     FLVCobra(Cobra);
     TipoApontador Aux;
+
+    Cobra->resize = resize;
 
     Cobra->Cabeca = malloc(sizeof(Corpo));
     Cobra->Cabeca->Ant = NULL;
@@ -35,18 +38,18 @@ void IniciaCobra(ListaCobra* Cobra){
     Aux->cor = SNAKE_COLOR;
     Cobra->Rabo->cor = SNAKE_COLOR;
 
-    Cobra->Cabeca->posicao = (Rectangle) {LARGURA/2 - STD_SIZE_X, ALTURA - STD_SIZE_Y -10, STD_SIZE_X, STD_SIZE_Y};
-    Aux->posicao = (Rectangle) {LARGURA/2 - STD_SIZE_X, ALTURA - STD_SIZE_Y - 10 + STD_SIZE_Y, STD_SIZE_X, STD_SIZE_Y};
-    Cobra->Rabo->posicao = (Rectangle) {LARGURA/2 - STD_SIZE_X, ALTURA - STD_SIZE_Y -10 + 2*STD_SIZE_Y, STD_SIZE_X, STD_SIZE_Y};
+    Cobra->Cabeca->posicao = (Rectangle) {(660/2 - 20)*Cobra->resize, (660 - 20-10)*Cobra->resize, 20*Cobra->resize, 20*Cobra->resize};
+    Aux->posicao = (Rectangle) {(660/2 - 20)*Cobra->resize, (660 - 20-10 + 20)*Cobra->resize, 20*Cobra->resize, 20*Cobra->resize};
+    Cobra->Rabo->posicao = (Rectangle) {(660/2 - 20)*Cobra->resize, (660 - 20-10 + 2*20)*Cobra->resize, 20*Cobra->resize, 20*Cobra->resize};
 
     /*A linha acima implementa a struct "Rectangle". Em ordem: 
       Rectangle.x = 660/2 - 20, 
       Rectangle.y = 660 - 20 - 10, 
-      Rectangle.width (largura) = 20, 
-      Rectangle.height (altura) = 20"
+      Rectangle.width (660) = 20, 
+      Rectangle.height (660) = 20"
 
-      O "Rectangle" é uma struct que cotem 4 dados: Altura, Largura, x e y, sendo esses últimos as coordenadas do canto superior esquerdo do retângulo
-      Assim, o retangulo cresce para a direita com o valor da largura e para baixo com base no valor da altura*/
+      O "Rectangle" é uma struct que cotem 4 dados: 660, 660, x e y, sendo esses últimos as coordenadas do canto superior esquerdo do retângulo
+      Assim, o retangulo cresce para a direita com o valor da 660 e para baixo com base no valor da 660*/
 
     Cobra->direcao = 0;
     Cobra->tamanho = 3;
@@ -88,10 +91,10 @@ void AtualizaPosCobra(ListaCobra* Cobra){
 
     switch (Cobra->direcao){
 
-        case 0: Nova_Posicao.y -= STD_SIZE_Y; break;
-        case 1: Nova_Posicao.x += STD_SIZE_X; break;
-        case 2: Nova_Posicao.y += STD_SIZE_Y; break;
-        case 3: Nova_Posicao.x -= STD_SIZE_X; break;
+        case 0: Nova_Posicao.y -= 20*Cobra->resize; break;
+        case 1: Nova_Posicao.x += 20*Cobra->resize; break;
+        case 2: Nova_Posicao.y += 20*Cobra->resize; break;
+        case 3: Nova_Posicao.x -= 20*Cobra->resize; break;
     }
 
     Cobra->Cabeca->posicao = Nova_Posicao;
@@ -104,14 +107,14 @@ void DesenhaCobra(ListaCobra* Cobra){
     int par = 2;
     while(Pintor != NULL){
         if(par %2 == 1){
-            DrawRectangleRec(Pintor->posicao, GOLD);
+            DrawRectangleRec(Pintor->posicao, WHITE);
         }else{
             DrawRectangleRec(Pintor->posicao, Pintor->cor);
         }par++;
         Pintor = Pintor->Prox;
     }
-    DrawRectangle(Cobra->Cabeca->posicao.x+3, Cobra->Cabeca->posicao.y+3, Cobra->Cabeca->posicao.width/5, Cobra->Cabeca->posicao.height/5, BLACK);
-    DrawRectangle(Cobra->Cabeca->posicao.x+14, Cobra->Cabeca->posicao.y+3, Cobra->Cabeca->posicao.width/5, Cobra->Cabeca->posicao.height/5, BLACK);
+    DrawRectangle(Cobra->Cabeca->posicao.x+3*Cobra->resize, Cobra->Cabeca->posicao.y+3*Cobra->resize, Cobra->Cabeca->posicao.width/(5*Cobra->resize), Cobra->Cabeca->posicao.height/(5*Cobra->resize), BLACK);
+    DrawRectangle(Cobra->Cabeca->posicao.x+14*Cobra->resize, Cobra->Cabeca->posicao.y+3*Cobra->resize, Cobra->Cabeca->posicao.width/(5*Cobra->resize), Cobra->Cabeca->posicao.height/(5*Cobra->resize), BLACK);
 }
 
 void AumentaCobra(ListaCobra* Cobra){

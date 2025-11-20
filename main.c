@@ -15,17 +15,34 @@ int main(){
     int gameOver = 0;
     srand(time(NULL));
 
-    InitWindow(LARGURA, ALTURA, "Snake Game");
+    InitWindow(660, 660, "Snake Game");
     SetTargetFPS(30);
-    IniciaJogo(&jogo);
+    IniciaJogo660(&jogo);
+    jogo.game_state = menu_prin;
+    InicializaMenu(&jogo);
+    InicializaConfig(&jogo);    
 
     while(!WindowShouldClose()){
 
         BeginDrawing();
         ClearBackground(BLACK);
 
-        if(!gameOver){
+        if(jogo.game_state == menu_prin){
+            DrawMenu(&jogo);
+            AtualizaMenu(&jogo);
+        }else if(jogo.game_state == leaderboards){
             
+        }else if(jogo.game_state == config){
+            DrawConfig(&jogo);
+            AtualizaConfig(&jogo);
+        }else if(jogo.game_state == sair){
+            EndDrawing();
+            LiberaEspaco(&jogo);
+            CloseAudioDevice();
+            CloseWindow();
+            return 0;
+        }
+        else if(!gameOver && jogo.game_state == start){   
             gameOver = AtualizaRodada(&jogo);
             DesenhaJogo(&jogo);
         }else{
@@ -33,7 +50,11 @@ int main(){
             FimdeJogotxt(&jogo);
             
             if(IsKeyPressed(KEY_ENTER)){
-                IniciaJogo(&jogo);
+                if(jogo.screen.altura == 660){
+                    IniciaJogo660(&jogo);
+                }else if(jogo.screen.altura == 820){
+                    IniciaJogo820(&jogo);
+                }
                 gameOver = 0;
                 jogo.sessao = 0;
             }

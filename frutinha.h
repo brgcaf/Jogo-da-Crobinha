@@ -11,9 +11,10 @@ typedef struct{
     Sound come_fruta;
     Image foto;
     Texture2D textura;
+    float resize;
 }Fruta;
 
-void IniciaFrutinha(Fruta* fruta);
+void IniciaFrutinha(Fruta* fruta, float resize);
 void DesenhaFrutinha(Fruta* fruta, ListaCobra* Cobra);
 void AtualizaPosFrutinha(Fruta* fruta, ListaCobra* Cobra);
 

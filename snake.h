@@ -1,7 +1,7 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#define SNAKE_COLOR YELLOW
+#define SNAKE_COLOR (Color){205,153,91,255}
 
 
 typedef struct corpo{
@@ -14,6 +14,7 @@ typedef struct corpo{
 typedef Corpo* TipoApontador;
 
 typedef struct{
+    float resize;
     TipoApontador Cabeca;
     TipoApontador Rabo; 
     int tamanho;
@@ -23,7 +24,7 @@ typedef struct{
 
 
 void FLVCobra(ListaCobra* Cobra);
-void IniciaCobra(ListaCobra* Cobra);
+void IniciaCobra(ListaCobra* Cobra, float resize);
 void AtualizaDirecao(ListaCobra* Cobra);
 void AtualizaPosCobra(ListaCobra* Cobra);
 void DesenhaCobra(ListaCobra* Cobra);
